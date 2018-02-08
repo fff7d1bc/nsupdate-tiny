@@ -57,7 +57,7 @@ def update(config_string):
 
     if current_domain_ipv4 != client_ipv4:
         result = update_ipv4(domain, host_secret, client_ipv4)
-        if result.status_code == 200:
+        if result.status_code == requests.codes.ok:
             print(result.text)
             return True
         else:
