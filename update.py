@@ -80,7 +80,7 @@ def main():
         with open(sys.argv[1], 'r') as config:
             for config_string in config:
                 if not update(config_string.strip()):
-                    errors = errors +1
+                    errors = errors + 1
 
         if errors:
             sys.exit(1)
