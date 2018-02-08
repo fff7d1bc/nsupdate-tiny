@@ -25,7 +25,11 @@ resolver.nameservers = ['8.8.8.8', '8.8.4.4']
 
 
 def get_ipv4_of_host(domain):
-    result = resolver.query(domain, 'a')
+    try:
+        result = resolver.query(domain, 'a')
+    except dns.resolver.NXDOMAIN:
+        return None
+
     return result.response.answer[0].items[0].to_text()
 
 
