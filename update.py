@@ -49,7 +49,7 @@ def update_ipv4(domain, host_secret, client_ipv4):
     return result
 
 
-def update(config_string):    
+def update(config_string):
     domain, host_secret = config_string.split(':')
 
     current_domain_ipv4 = get_ipv4_of_host(domain)
@@ -59,9 +59,10 @@ def update(config_string):
         result = update_ipv4(domain, host_secret, client_ipv4)
         if result.status_code == 200:
             print(result.text)
+            return True
         else:
             print("Error: '{}'".format(result.text))
-
+            return False
     else:
         print(
             "Nothing to update, '{domain}' is already set to '{client_ipv4}' address".format(
@@ -73,9 +74,15 @@ def update(config_string):
 
 def main():
     if len(sys.argv) == 2:
+        errors = 0
+
         with open(sys.argv[1], 'r') as config:
             for config_string in config:
-                update(config_string.strip())
+                if not update(config_string.strip()):
+                    errors = errors +1
+
+        if errors:
+            sys.exit(1)
     else:
         print('Usage: update.py /path/to/config.conf')
         sys.exit(1)
