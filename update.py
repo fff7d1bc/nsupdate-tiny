@@ -70,6 +70,7 @@ def update(config_string):
                 client_ipv4=client_ipv4
             )
         )
+        return True
 
 
 def main():
